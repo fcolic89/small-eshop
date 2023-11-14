@@ -35,6 +35,11 @@ services:
       - "8080:8080"
     networks:
       - my-network
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      - MONGODB_URI=mongodb://admin:admin@mongo:27017/products?directConnection=true&authSource=products
 
 networks:
   my-network:
