@@ -2,7 +2,7 @@ const Product = require('../database/models/productModel');
 
 async function getProducts(req, res){
     try{
-        let limit = Number(req.query.size)+1;
+        let limit = Number(req.query.size);
         let skip = (Number(req.query.page)-1)*Number(req.query.size);
         let name = req.query.name || '';
         let desc = req.query.desc || '';
@@ -30,7 +30,7 @@ async function getProducts(req, res){
 async function findProduct(req, res){
     try{
         let product = await Product.findOne({id: req.params.id});
-        if(product === undefined){
+        if(!product){
             return res.status(404).json({message: `Product with id ${req.params.id} was not found.`});
         }
         return res.send(product);
@@ -44,10 +44,6 @@ async function addProduct(req, res){
     try{
         const productId = req.body.id;
         const productQuantity = req.body.quantity || 1;
-
-        if(productId === undefined){
-            return res.status(400).json({message: `No product id in request`});
-        }
 
         const product = await Product.findOne({id: productId});
         if(!product){
