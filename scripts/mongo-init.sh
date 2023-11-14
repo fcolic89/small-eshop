@@ -6,6 +6,8 @@ set -m
 
 sleep 5
 
-mongoimport -d products -c products --file products.json --jsonArray
+/usr/bin/mongoimport -d products -c products --file products.json --jsonArray
+
+/usr/bin/mongosh mongodb://mongo:27017/products --file init-data.js
 
 fg %1
